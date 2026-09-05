@@ -1,0 +1,44 @@
+{
+  "version": "2026.09.01",
+  "name": "AI Factory capital stack",
+  "reference_total_usd_billions": 68.445,
+  "reference_note": "Seed weights calculated only from the user-provided Stargate reference image. They are hypotheses requiring source validation.",
+  "segments": [
+    {
+      "id": "compute_servers",
+      "name": "Compute and servers",
+      "reference_spend_usd_billions": 48.75,
+      "reference_weight": 0.71225,
+      "subsegments": ["accelerators", "cpu", "hbm", "ai_servers", "storage"]
+    },
+    {
+      "id": "networking",
+      "name": "Networking",
+      "reference_spend_usd_billions": 8.385,
+      "reference_weight": 0.12251,
+      "subsegments": ["switches", "nic_dpu", "infiniBand", "ethernet", "optics", "cabling"]
+    },
+    {
+      "id": "power",
+      "name": "Power infrastructure",
+      "reference_spend_usd_billions": 6.63,
+      "reference_weight": 0.09686,
+      "subsegments": ["generation", "transformers", "switchgear", "ups", "pdu_busway", "generators", "energy_storage"]
+    },
+    {
+      "id": "cooling",
+      "name": "Cooling systems",
+      "reference_spend_usd_billions": 2.145,
+      "reference_weight": 0.03134,
+      "subsegments": ["liquid_cooling", "cdu", "chillers", "cooling_towers", "crah", "heat_rejection"]
+    },
+    {
+      "id": "construction",
+      "name": "Engineering and construction",
+      "reference_spend_usd_billions": 2.535,
+      "reference_weight": 0.03703,
+      "subsegments": ["design", "general_contracting", "commissioning", "modular_construction"]
+    }
+  ]
+}
+

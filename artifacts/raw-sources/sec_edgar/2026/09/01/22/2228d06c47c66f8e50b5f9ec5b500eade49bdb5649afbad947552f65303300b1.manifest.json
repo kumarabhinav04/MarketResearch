@@ -1,0 +1,18 @@
+{
+  "byte_count": 160273,
+  "content_hash": "2228d06c47c66f8e50b5f9ec5b500eade49bdb5649afbad947552f65303300b1",
+  "content_type": "application/json",
+  "external_id": "CIK0001045810-submissions",
+  "metadata": {
+    "cik": "0001045810"
+  },
+  "response_headers": {
+    "content-length": "26211",
+    "content-type": "application/json",
+    "date": "Tue, 01 Sep 2026 17:49:10 GMT"
+  },
+  "retrieved_at": "2026-09-01T17:49:10.910897+00:00",
+  "schema_version": "1.0",
+  "source_id": "sec_edgar",
+  "source_url": "https://data.sec.gov/submissions/CIK0001045810.json"
+}

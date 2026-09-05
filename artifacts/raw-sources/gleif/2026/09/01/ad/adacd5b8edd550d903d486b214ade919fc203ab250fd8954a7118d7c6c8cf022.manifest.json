@@ -1,0 +1,19 @@
+{
+  "byte_count": 264,
+  "content_hash": "adacd5b8edd550d903d486b214ade919fc203ab250fd8954a7118d7c6c8cf022",
+  "content_type": "application/json",
+  "external_id": "fuzzy-name-search-sec-0001045810",
+  "metadata": {
+    "company_id": "sec-0001045810",
+    "legal_name": "NVIDIA CORP"
+  },
+  "response_headers": {
+    "cache-control": "private, must-revalidate",
+    "content-type": "application/json",
+    "date": "Tue, 01 Sep 2026 17:51:24 GMT"
+  },
+  "retrieved_at": "2026-09-01T17:51:24.545164+00:00",
+  "schema_version": "1.0",
+  "source_id": "gleif",
+  "source_url": "https://api.gleif.org/api/v1/fuzzycompletions"
+}

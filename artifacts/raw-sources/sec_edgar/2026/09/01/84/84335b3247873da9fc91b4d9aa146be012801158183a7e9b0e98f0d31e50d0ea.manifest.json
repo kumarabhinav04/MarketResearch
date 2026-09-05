@@ -1,0 +1,20 @@
+{
+  "byte_count": 26457,
+  "content_hash": "84335b3247873da9fc91b4d9aa146be012801158183a7e9b0e98f0d31e50d0ea",
+  "content_type": "text/html",
+  "external_id": "0001045810-26-000073",
+  "metadata": {
+    "cik": "0001045810",
+    "form": "8-K"
+  },
+  "response_headers": {
+    "content-length": "3983",
+    "content-type": "text/html",
+    "date": "Tue, 01 Sep 2026 17:49:11 GMT",
+    "last-modified": "Wed, 26 Aug 2026 20:21:44 GMT"
+  },
+  "retrieved_at": "2026-09-01T17:49:11.605313+00:00",
+  "schema_version": "1.0",
+  "source_id": "sec_edgar",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/nvda-20260826.htm"
+}

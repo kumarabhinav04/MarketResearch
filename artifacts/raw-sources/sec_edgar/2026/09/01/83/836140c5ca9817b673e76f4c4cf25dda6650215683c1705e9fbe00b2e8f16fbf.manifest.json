@@ -1,0 +1,20 @@
+{
+  "byte_count": 521378,
+  "content_hash": "836140c5ca9817b673e76f4c4cf25dda6650215683c1705e9fbe00b2e8f16fbf",
+  "content_type": "application/json",
+  "external_id": "company-tickers-exchange",
+  "metadata": {
+    "record_count": 5
+  },
+  "response_headers": {
+    "cache-control": "max-age=35",
+    "content-length": "180955",
+    "content-type": "application/json",
+    "date": "Tue, 01 Sep 2026 17:48:55 GMT",
+    "last-modified": "Mon, 31 Aug 2026 21:12:00 GMT"
+  },
+  "retrieved_at": "2026-09-01T17:48:55.686380+00:00",
+  "schema_version": "1.0",
+  "source_id": "sec_edgar",
+  "source_url": "https://www.sec.gov/files/company_tickers_exchange.json"
+}

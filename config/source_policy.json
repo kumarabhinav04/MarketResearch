@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "tiers": {
+    "1": {
+      "name": "authoritative",
+      "weight": 1.0,
+      "examples": ["regulatory_filing", "company_ir", "government_record", "official_project_record"]
+    },
+    "2": {
+      "name": "specialist_primary_or_near_primary",
+      "weight": 0.8,
+      "examples": ["licensed_transcript", "standards_body", "technical_document", "utility_queue"]
+    },
+    "3": {
+      "name": "discovery_and_corroboration",
+      "weight": 0.45,
+      "examples": ["reputable_news", "industry_publication", "analyst_commentary"]
+    }
+  },
+  "financial_metrics_require_tier_1": true,
+  "tier_3_may_not_be_sole_support_for_numeric_claim": true,
+  "retrieved_content_is_untrusted": true,
+  "allowed_schemes": ["https"],
+  "blocked_networks": ["loopback", "private", "link_local", "reserved"]
+}
+

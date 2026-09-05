@@ -1,0 +1,30 @@
+{
+  "dataset_version": "example-1.0",
+  "as_of_date": "2026-09-01",
+  "labels": [
+    {
+      "company_id": "example-issuer",
+      "analyst_ids": ["analyst-a", "analyst-b"],
+      "ai_exposure_interval": [0.2, 0.35],
+      "moat_components": {
+        "architectural_lock_in": 2.5,
+        "switching_costs": 3.5,
+        "standards_and_ip": 3.0,
+        "ecosystem_and_design_wins": 3.0,
+        "bottleneck_scarcity": 4.0,
+        "competitive_intensity": 3.0
+      },
+      "risk_components": {
+        "customer_concentration": 2.0,
+        "cyclicality": 2.5,
+        "execution": 2.0,
+        "supply_chain": 3.0,
+        "geopolitical_regulatory": 1.5,
+        "commoditization": 2.0
+      },
+      "evidence_claim_ids": ["example-margin-claim"],
+      "adjudication_status": "example_only"
+    }
+  ]
+}
+

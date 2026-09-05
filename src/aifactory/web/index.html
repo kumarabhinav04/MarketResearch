@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Factory Research Workbench</title>
+  <style>
+    :root { color-scheme: light dark; --bg:#f5f7fb; --panel:#fff; --text:#172033; --muted:#667085; --border:#d8dee9; --accent:#176b87; --accent2:#0f5168; --ok:#16794b; --warn:#9a6700; --bad:#b42318; --soft:#eef6f8; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#0d1320; --panel:#151d2c; --text:#eef3fb; --muted:#aab5c7; --border:#344054; --accent:#59bddb; --accent2:#8fd6ea; --ok:#57c892; --warn:#efbd5a; --bad:#ff8278; --soft:#132c38; } }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font:14px/1.5 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    header { padding:20px clamp(16px,4vw,48px); background:var(--panel); border-bottom:1px solid var(--border); display:flex; gap:20px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    h1 { margin:0; font-size:22px; font-weight:650; letter-spacing:-.02em; }
+    h2 { font-size:16px; margin:0 0 14px; }
+    h3 { font-size:14px; margin:18px 0 8px; }
+    p { margin:6px 0; }
+    main { padding:24px clamp(16px,4vw,48px) 48px; max-width:1500px; margin:auto; }
+    .muted { color:var(--muted); }
+    .controls, .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:end; }
+    .layout { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(320px,.85fr); gap:20px; margin-top:20px; }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:18px; min-width:0; }
+    .stack { display:grid; gap:20px; }
+    label { display:grid; gap:4px; color:var(--muted); font-size:12px; }
+    input, select, button, textarea { font:inherit; }
+    input, select, textarea { color:var(--text); background:var(--panel); border:1px solid var(--border); border-radius:6px; padding:8px 10px; min-width:140px; }
+    button { border:1px solid var(--border); background:var(--panel); color:var(--text); padding:8px 12px; border-radius:6px; cursor:pointer; }
+    button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+    button:hover { border-color:var(--accent); }
+    button:disabled { opacity:.55; cursor:wait; }
+    .status { padding:4px 8px; border-radius:999px; background:var(--soft); color:var(--accent2); font-size:12px; }
+    .table-wrap { overflow:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { padding:9px 8px; border-bottom:1px solid var(--border); text-align:left; white-space:nowrap; }
+    th { color:var(--muted); font-size:12px; font-weight:600; }
+    td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+    tbody tr { cursor:pointer; }
+    tbody tr:hover, tbody tr.selected { background:var(--soft); }
+    .metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:12px 0; }
+    .metric { border-left:3px solid var(--accent); padding:6px 10px; background:var(--soft); }
+    .metric b { display:block; font-size:18px; font-variant-numeric:tabular-nums; }
+    .metric span { color:var(--muted); font-size:12px; }
+    .kv { display:grid; grid-template-columns:minmax(120px,.7fr) 1.3fr; gap:6px 12px; }
+    .kv dt { color:var(--muted); }
+    .kv dd { margin:0; overflow-wrap:anywhere; }
+    .error { color:var(--bad); white-space:pre-wrap; }
+    .success { color:var(--ok); }
+    .warning { color:var(--warn); }
+    .notice { border-left:3px solid var(--warn); padding:10px 12px; background:var(--soft); margin-top:14px; }
+    code { font-size:12px; overflow-wrap:anywhere; }
+    .audit { max-height:290px; overflow:auto; }
+    .audit-item { padding:8px 0; border-bottom:1px solid var(--border); }
+    .empty { padding:24px; text-align:center; color:var(--muted); }
+    @media (max-width:920px) { .layout { grid-template-columns:1fr; } }
+    @media (max-width:600px) { .metrics { grid-template-columns:1fr; } header { align-items:flex-start; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>AI Factory Research Workbench</h1>
+      <p class="muted">Point-in-time evidence → reviewed fundamental-growth ranking</p>
+    </div>
+    <div class="controls">
+      <label>API key<input id="apiKey" type="password" value="local-development-key" autocomplete="current-password"></label>
+      <span id="health" class="status">Checking service…</span>
+    </div>
+  </header>
+  <main>
+    <section class="panel">
+      <div class="toolbar">
+        <label>Research cutoff<input id="asOfDate" type="date"></label>
+        <button id="seedButton">Seed synthetic demo</button>
+        <button id="runButton" class="primary">Run research</button>
+        <button id="refreshButton">Refresh</button>
+      </div>
+      <div class="notice"><strong>Demo safety:</strong> bundled companies and evidence are synthetic. Published output is a fundamental-beneficiary ranking, not a stock-return forecast or investment advice.</div>
+      <p id="message" class="muted" aria-live="polite"></p>
+    </section>
+
+    <div class="layout">
+      <div class="stack">
+        <section class="panel">
+          <div class="toolbar" style="justify-content:space-between">
+            <h2>Research runs</h2>
+            <select id="runSelect" aria-label="Research run"></select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Created</th><th>Cutoff</th><th>Status</th><th>Runtime</th><th>Run ID</th></tr></thead>
+              <tbody id="runsBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="toolbar" style="justify-content:space-between">
+            <h2>Top 20 provisional ranking</h2>
+            <button id="reportButton">Generate report</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th class="num">Rank</th><th>Company</th><th>Segment</th><th class="num">TAFGS</th><th class="num">Bear–bull</th><th class="num">Confidence</th><th>Review</th></tr></thead>
+              <tbody id="rankingBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <aside class="stack">
+        <section class="panel">
+          <h2>Company dossier</h2>
+          <div id="dossier" class="empty">Select a ranked company.</div>
+        </section>
+        <section class="panel">
+          <h2>Run audit trail</h2>
+          <div id="audit" class="audit empty">Select a run.</div>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <script>
+    const state = { runs: [], rankings: [], runId: null, companyId: null };
+    const $ = id => document.getElementById(id);
+    $('asOfDate').value = new Date().toISOString().slice(0,10);
+    $('apiKey').value = sessionStorage.getItem('aifactory-api-key') || 'local-development-key';
+    $('apiKey').addEventListener('change', () => sessionStorage.setItem('aifactory-api-key', $('apiKey').value));
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, { ...options, headers: { 'Content-Type':'application/json', 'X-API-Key':$('apiKey').value, ...(options.headers || {}) } });
+      if (!response.ok) { const body = await response.json().catch(() => ({})); throw new Error(body.detail || `${response.status} ${response.statusText}`); }
+      return response.json();
+    }
+    function setBusy(busy, message='') { ['seedButton','runButton','refreshButton','reportButton'].forEach(id => $(id).disabled=busy); $('message').textContent=message; }
+    function esc(value) { return String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
+    function pct(value) { return `${(Number(value)*100).toFixed(1)}%`; }
+    function number(value) { return Number(value).toFixed(2); }
+
+    async function health() { try { const r=await fetch('/health'); const b=await r.json(); $('health').textContent=b.status==='ok'?'Service healthy':'Service unavailable'; $('health').className='status'; } catch { $('health').textContent='Service unavailable'; $('health').className='status error'; } }
+    async function loadRuns(selectNewest=false) {
+      state.runs=await api('/api/v1/runs');
+      $('runsBody').innerHTML=state.runs.map(run => `<tr data-run="${esc(run.id)}"><td>${esc((run.created_at||'').slice(0,19).replace('T',' '))}</td><td>${esc(run.as_of_date)}</td><td>${esc(run.status)}</td><td>${esc(run.config_snapshot_json?.runtime||'')}</td><td><code>${esc(run.id)}</code></td></tr>`).join('') || '<tr><td colspan="5" class="empty">No runs yet.</td></tr>';
+      $('runSelect').innerHTML='<option value="">Select a run</option>'+state.runs.map(run => `<option value="${esc(run.id)}">${esc(run.as_of_date)} · ${esc(run.status)} · ${esc(run.id.slice(0,8))}</option>`).join('');
+      document.querySelectorAll('[data-run]').forEach(row => row.onclick=()=>selectRun(row.dataset.run));
+      if (selectNewest && state.runs.length) await selectRun(state.runs[0].id);
+    }
+    async function selectRun(runId) {
+      state.runId=runId; state.companyId=null; $('runSelect').value=runId;
+      state.rankings=await api(`/api/v1/runs/${runId}/rankings`);
+      $('rankingBody').innerHTML=state.rankings.map(item => `<tr data-company="${esc(item.company_id)}"><td class="num">${item.rank}</td><td>${esc(item.legal_name)} <span class="muted">${esc(item.ticker)}</span></td><td>${esc(item.subsegment.replaceAll('_',' '))}</td><td class="num">${number(item.risk_adjusted_tafgs)}</td><td class="num">${item.bear_rank}–${item.bull_rank}</td><td class="num">${pct(item.rank_confidence)}</td><td>${esc(item.review_status)}</td></tr>`).join('') || '<tr><td colspan="7" class="empty">No rankable companies.</td></tr>';
+      document.querySelectorAll('[data-company]').forEach(row => row.onclick=()=>selectCompany(row.dataset.company));
+      await loadAudit(runId);
+      $('dossier').className='empty'; $('dossier').textContent='Select a ranked company.';
+    }
+    async function selectCompany(companyId) {
+      state.companyId=companyId;
+      document.querySelectorAll('[data-company]').forEach(row => row.classList.toggle('selected', row.dataset.company===companyId));
+      const item=await api(`/api/v1/runs/${state.runId}/assessments/${companyId}`); const a=item.assessment; const f=a.forecast;
+      $('dossier').className='';
+      $('dossier').innerHTML=`<h3>${esc(item.legal_name)} <span class="muted">${esc(item.ticker)}</span></h3>
+        <p>${esc(a.narrative?.role||'Role unavailable')}</p>
+        <div class="metrics"><div class="metric"><b>${number(a.risk_adjusted_tafgs)}</b><span>Risk-adjusted TAFGS</span></div><div class="metric"><b>${number(a.moat_score)}/5</b><span>Moat</span></div><div class="metric"><b>${pct(a.evidence_confidence)}</b><span>Evidence confidence</span></div></div>
+        <dl class="kv"><dt>AI exposure</dt><dd>${pct(a.ai_exposure)}</dd><dt>Operating margin</dt><dd>${Number(a.operating_margin_pct).toFixed(1)}% · score ${a.operating_margin_score}/5</dd><dt>AI-driven CAGR</dt><dd>${pct(f.base_company_ai_cagr)} · ${pct(f.bear_company_ai_cagr)}–${pct(f.bull_company_ai_cagr)}</dd><dt>Risk discount</dt><dd>${pct(a.risk_discount)}</dd><dt>Citation coverage</dt><dd>${pct(a.citation_coverage)}</dd><dt>Evidence claims</dt><dd>${a.evidence_claim_ids.length}</dd></dl>
+        <h3>Review</h3><div class="toolbar"><label>Reviewer<input id="reviewer" value="analyst@example.com"></label><label>Comment<input id="reviewComment" value="Evidence and score reviewed"></label><button id="approveButton" class="primary">Approve</button><button id="changesButton">Needs changes</button></div>
+        <p class="${a.validation_errors.length?'error':'success'}">${a.validation_errors.length?esc(a.validation_errors.join('; ')):'All deterministic quality gates passed.'}</p>`;
+      $('approveButton').onclick=()=>submitReview('approved'); $('changesButton').onclick=()=>submitReview('needs_changes');
+    }
+    async function submitReview(decision) { setBusy(true,'Saving analyst review…'); try { await api(`/api/v1/runs/${state.runId}/assessments/${state.companyId}/reviews`,{method:'POST',body:JSON.stringify({reviewer:$('reviewer').value,decision,comment:$('reviewComment').value,overrides:{}})}); await selectRun(state.runId); setBusy(false,'Review recorded.'); } catch(e){setBusy(false,e.message);} }
+    async function loadAudit(runId) { const rows=await api(`/api/v1/runs/${runId}/audit?limit=100`); $('audit').className='audit'; $('audit').innerHTML=rows.map(row=>`<div class="audit-item"><strong>${esc(row.event_type)}</strong><br><span class="muted">${esc(row.created_at)} · ${esc(row.actor)}</span></div>`).join('')||'<div class="empty">No audit events.</div>'; }
+
+    $('seedButton').onclick=async()=>{setBusy(true,'Loading synthetic companies and evidence…');try{const r=await api('/api/v1/demo/seed',{method:'POST'});setBusy(false,`Loaded ${r.companies} companies, ${r.documents} documents, and ${r.claims} evidence claims.`);await loadRuns();}catch(e){setBusy(false,e.message);}};
+    $('runButton').onclick=async()=>{setBusy(true,'Running agent workflows and deterministic ranking…');try{const r=await api('/api/v1/runs',{method:'POST',body:JSON.stringify({as_of_date:$('asOfDate').value,generate_report:true})});setBusy(false,`Run ${r.run_id.slice(0,8)} completed with ${r.ranked_count} ranked companies.`);await loadRuns(true);}catch(e){setBusy(false,e.message);}};
+    $('refreshButton').onclick=async()=>{setBusy(true,'Refreshing…');try{await loadRuns(Boolean(state.runId));setBusy(false,'Refreshed.');}catch(e){setBusy(false,e.message);}};
+    $('reportButton').onclick=async()=>{if(!state.runId)return;setBusy(true,'Generating report and provenance manifest…');try{const r=await api(`/api/v1/runs/${state.runId}/report`,{method:'POST'});setBusy(false,`Report generated: ${r.report}`);}catch(e){setBusy(false,e.message);}};
+    $('runSelect').onchange=()=>$('runSelect').value&&selectRun($('runSelect').value);
+    health(); loadRuns(true).catch(e=>$('message').textContent=e.message);
+  </script>
+</body>
+</html>

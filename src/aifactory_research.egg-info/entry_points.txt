@@ -1,0 +1,2 @@
+[console_scripts]
+aifactory = aifactory.cli:main

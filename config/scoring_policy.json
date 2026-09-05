@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "margin_thresholds": [
+    {"minimum_exclusive": 40.0, "score": 5},
+    {"minimum_inclusive": 30.0, "score": 4},
+    {"minimum_inclusive": 20.0, "score": 3},
+    {"minimum_inclusive": 10.0, "score": 2},
+    {"minimum_inclusive": -1000.0, "score": 1}
+  ],
+  "moat_weights": {
+    "architectural_lock_in": 0.22,
+    "switching_costs": 0.18,
+    "standards_and_ip": 0.18,
+    "ecosystem_and_design_wins": 0.18,
+    "bottleneck_scarcity": 0.14,
+    "competitive_intensity": 0.10
+  },
+  "risk_weights": {
+    "customer_concentration": 0.20,
+    "cyclicality": 0.15,
+    "execution": 0.20,
+    "supply_chain": 0.15,
+    "geopolitical_regulatory": 0.15,
+    "commoditization": 0.15
+  },
+  "maximum_risk_discount": 0.35,
+  "minimum_evidence_confidence": 0.65,
+  "minimum_citation_coverage": 0.85,
+  "rank_size": 20,
+  "publish_requires_top_rank_approval": true
+}
+

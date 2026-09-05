@@ -1,0 +1,159 @@
+{
+  "version": "1.0.0",
+  "chunk_size_chars": 6000,
+  "chunk_overlap_chars": 500,
+  "max_context_chunks": 8,
+  "max_proposals_per_document": 8,
+  "model_max_completion_tokens": 2400,
+  "minimum_quote_chars": 20,
+  "maximum_quote_chars": 600,
+  "maximum_model_confidence": 0.9,
+  "claim_definitions": {
+    "ai_exposure": {
+      "kind": "factual_ratio",
+      "description": "Current fraction of total company revenue directly attributable to AI-factory infrastructure. Abstain unless the document provides enough segment or product revenue data to calculate it.",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "unit": "ratio",
+      "keywords": ["data center revenue", "compute revenue", "AI revenue", "data center sales", "segment revenue", "accelerated computing"]
+    },
+    "ai_segment_cagr_bear": {
+      "kind": "forecast_assumption",
+      "description": "Three-year bear-case CAGR for the company's AI-factory-exposed business, expressed as a decimal. It must be traceable to disclosed demand, guidance or backlog and is always review-required.",
+      "minimum": -0.5,
+      "maximum": 2.0,
+      "unit": "decimal CAGR",
+      "keywords": ["guidance", "outlook", "backlog", "demand", "capacity", "expected growth", "data center"]
+    },
+    "ai_segment_cagr_base": {
+      "kind": "forecast_assumption",
+      "description": "Three-year base-case CAGR for the company's AI-factory-exposed business, expressed as a decimal and supported by disclosed drivers.",
+      "minimum": -0.5,
+      "maximum": 2.0,
+      "unit": "decimal CAGR",
+      "keywords": ["guidance", "outlook", "backlog", "demand", "capacity", "expected growth", "data center"]
+    },
+    "ai_segment_cagr_bull": {
+      "kind": "forecast_assumption",
+      "description": "Three-year bull-case CAGR for the company's AI-factory-exposed business, expressed as a decimal and supported by disclosed upside drivers.",
+      "minimum": -0.5,
+      "maximum": 2.0,
+      "unit": "decimal CAGR",
+      "keywords": ["guidance", "outlook", "backlog", "demand", "capacity", "expected growth", "data center"]
+    },
+    "moat_architectural_lock_in": {
+      "kind": "scored_judgment",
+      "description": "0-5 score for proprietary architecture or software-platform lock-in. 0 means none; 5 means a dominant proprietary platform with material dependency.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["platform", "architecture", "software ecosystem", "developer", "installed base", "proprietary"]
+    },
+    "moat_switching_costs": {
+      "kind": "scored_judgment",
+      "description": "0-5 score for technical, operational or qualification switching costs; 5 requires strong documented customer dependency.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["switching", "qualification", "validated", "installed base", "migration", "long-term agreement"]
+    },
+    "moat_standards_and_ip": {
+      "kind": "scored_judgment",
+      "description": "0-5 score for defensible intellectual property or standards-setting influence.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["patent", "intellectual property", "standard", "proprietary", "license", "interconnect"]
+    },
+    "moat_ecosystem_and_design_wins": {
+      "kind": "scored_judgment",
+      "description": "0-5 score for ecosystem reach, reference architectures and durable design wins.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["design win", "ecosystem", "partner", "reference architecture", "cloud service provider", "hyperscaler"]
+    },
+    "moat_bottleneck_scarcity": {
+      "kind": "scored_judgment",
+      "description": "0-5 score for control of a scarce production capability or supply-chain bottleneck.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["supply constrained", "capacity", "lead time", "sole source", "scarcity", "allocation"]
+    },
+    "moat_competitive_intensity": {
+      "kind": "scored_judgment",
+      "description": "0-5 score where 5 means favorable competitive structure and 0 means intense commoditized competition.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["competition", "competitor", "market share", "pricing", "commoditization", "alternative"]
+    },
+    "risk_customer_concentration": {
+      "kind": "risk_severity",
+      "description": "0-5 customer-concentration risk severity; 5 is extreme concentration.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["customer concentration", "significant customer", "percentage of revenue", "accounts receivable", "one customer"]
+    },
+    "risk_cyclicality": {
+      "kind": "risk_severity",
+      "description": "0-5 cyclicality risk severity.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["cyclical", "downturn", "capital spending", "inventory correction", "demand volatility"]
+    },
+    "risk_execution": {
+      "kind": "risk_severity",
+      "description": "0-5 product, capacity-ramp, construction or delivery execution risk severity.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["execution", "ramp", "delay", "yield", "construction", "implementation", "new product"]
+    },
+    "risk_supply_chain": {
+      "kind": "risk_severity",
+      "description": "0-5 upstream supply-chain dependency risk severity.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["supply chain", "sole source", "foundry", "supplier", "shortage", "component"]
+    },
+    "risk_geopolitical_regulatory": {
+      "kind": "risk_severity",
+      "description": "0-5 export-control, geopolitical and regulatory risk severity.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["export control", "China", "regulation", "sanction", "geopolitical", "license requirement"]
+    },
+    "risk_commoditization": {
+      "kind": "risk_severity",
+      "description": "0-5 risk that alternatives, standards or price competition erode differentiation.",
+      "minimum": 0.0,
+      "maximum": 5.0,
+      "unit": "score",
+      "keywords": ["commoditization", "pricing pressure", "open standard", "alternative", "substitute", "competition"]
+    },
+    "role_narrative": {
+      "kind": "narrative_fact",
+      "description": "Concise evidence-backed description of how the company monetizes AI-factory capital spending.",
+      "unit": null,
+      "keywords": ["data center", "accelerated computing", "networking", "power", "cooling", "server", "hyperscale"]
+    },
+    "catalyst": {
+      "kind": "narrative_fact",
+      "description": "Evidence-backed demand, product-cycle, capacity or backlog catalyst with a stated time horizon where available.",
+      "unit": null,
+      "keywords": ["launch", "ramp", "backlog", "capacity", "demand", "next generation", "expected"]
+    },
+    "contrary_evidence": {
+      "kind": "narrative_fact",
+      "description": "Specific evidence that weakens the AI-factory growth thesis or contradicts another claim.",
+      "unit": null,
+      "keywords": ["decline", "risk", "uncertain", "competition", "restriction", "delay", "shortage"]
+    }
+  }
+}

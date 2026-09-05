@@ -1,0 +1,53 @@
+{
+  "companies": [
+    {
+      "id": "example-issuer",
+      "legal_name": "Example Public Infrastructure Company",
+      "ticker": "EXM",
+      "exchange": "NYSE",
+      "security_id": "US0000000001",
+      "segment": "power",
+      "subsegment": "switchgear",
+      "eligible": true,
+      "demo": false,
+      "metadata": {"example_only": true}
+    }
+  ],
+  "documents": [
+    {
+      "id": "example-document",
+      "company_id": "example-issuer",
+      "source_type": "regulatory_filing",
+      "source_tier": "1",
+      "publisher": "Example regulator",
+      "title": "Example annual report",
+      "source_url": "https://example.com/annual-report",
+      "published_at": "2026-02-15",
+      "retrieved_at": "2026-03-01T12:00:00+00:00",
+      "content_hash": "replace-with-sha256",
+      "parser_version": "example-parser-1.0",
+      "text_preview": "Reported operating margin was 24.8 percent."
+    }
+  ],
+  "claims": [
+    {
+      "id": "example-margin-claim",
+      "company_id": "example-issuer",
+      "document_id": "example-document",
+      "claim_type": "operating_margin",
+      "value_numeric": 24.8,
+      "value_text": null,
+      "unit": "percent",
+      "period_end": "2025-12-31",
+      "confidence": 0.99,
+      "evidence_span": "Reported operating margin was 24.8 percent.",
+      "page_or_section": "Financial review, page 42",
+      "source_tier": "1",
+      "published_at": "2026-02-15",
+      "as_of_eligible": true,
+      "contradiction": false,
+      "extraction_method": "structured_table"
+    }
+  ]
+}
+

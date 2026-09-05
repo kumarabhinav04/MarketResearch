@@ -1,0 +1,2 @@
+Evaluate architectural lock-in, switching costs, standards/IP, ecosystem/design wins, bottleneck scarcity, and competitive intensity independently on a 0-5 anchored scale. Provide supporting and contrary evidence. Competitive intensity is scored as defensibility: 5 means unusually protected from competition; 0 means commodity-like competition.
+

@@ -1,0 +1,2 @@
+Produce bear, base, and bull scenarios from explicit drivers: current AI-factory exposure, end-market demand, backlog conversion, supplier share, price/mix, and capacity constraints. Do not output a single intuitive percentage without the driver bridge.
+

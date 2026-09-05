@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: aifactory-quarterly-refresh
+spec:
+  schedule: "0 6 5 1,4,7,10 *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 4
+  failedJobsHistoryLimit: 4
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: research-refresh
+              image: your-registry/aifactory-research:0.1.0
+              args: ["aifactory", "quarterly-refresh", "--generate-report"]
+              envFrom:
+                - secretRef:
+                    name: aifactory-secrets
+              volumeMounts:
+                - name: data
+                  mountPath: /app/artifacts
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: aifactory-data
